@@ -1,84 +1,73 @@
-"use client";
-import { useState, useRef, useEffect } from "react";
+'use client'
 
+import { useEffect, useRef, useState } from 'react'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/select'
+import { onUploadImage } from '@/server/camera'
 
-export function Camera({
-  onUploadImage,
-}: {
-  onUploadImage: (formData: FormData) => void;
-}) {
-  const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
-  const [selectedDevice, setSelectedDevice] = useState<string>("");
-  const [isCapturing, setIsCapturing] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [imageCapture, setImageCapture] = useState<ImageCapture | null>(null);
-  const [uploading, setUploading] = useState(false);
+export function Camera() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  const [devices, setDevices] = useState<MediaDeviceInfo[]>([])
+  const [selectedDevice, setSelectedDevice] = useState<string>('')
+  const [isCapturing, setIsCapturing] = useState(false)
+  const [imageCapture, setImageCapture] = useState<ImageCapture | null>(null)
+  const [uploading, setUploading] = useState(false)
 
   useEffect(() => {
     async function getDevices() {
       await navigator.mediaDevices.getUserMedia({
         video: true,
-      });
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      const videoDevices = devices.filter(
-        (device) => device.kind === "videoinput"
-      );
-      setDevices(videoDevices);
+      })
+      const devices = await navigator.mediaDevices.enumerateDevices()
+      const videoDevices = devices.filter((device) => device.kind === 'videoinput')
+      setDevices(videoDevices)
       if (videoDevices.length > 0) {
-        setSelectedDevice(videoDevices[0].deviceId);
+        setSelectedDevice(videoDevices[0].deviceId)
       }
     }
-    getDevices();
-  }, []);
+    getDevices()
+  }, [])
 
   const startCapture = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { deviceId: selectedDevice, width: 1920 / 2 },
-      });
+      })
       if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        setImageCapture(new ImageCapture(stream.getVideoTracks()[0]));
-        setIsCapturing(true);
+        videoRef.current.srcObject = stream
+        setImageCapture(new ImageCapture(stream.getVideoTracks()[0]))
+        setIsCapturing(true)
       }
     } catch (err) {
-      console.error("Error accessing the camera:", err);
+      console.error('Error accessing the camera:', err)
     }
-  };
+  }
 
   const takePhoto = async () => {
     if (videoRef.current && imageCapture) {
-      setUploading(true);
-      videoRef.current.pause();
-      const blob = await imageCapture.takePhoto();
-      const formData = new FormData();
-      formData.append("image", blob, "image.jpg");
-      await onUploadImage(formData);
-      setUploading(false);
+      setUploading(true)
+      videoRef.current.pause()
+      const blob = await imageCapture.takePhoto()
+      const formData = new FormData()
+      formData.append('image', blob, 'image.jpg')
+      await onUploadImage(formData)
+      setUploading(false)
     }
-  };
+  }
 
   return (
     <div className="max-w-2xl mx-auto p-4 space-y-4">
-      <h2 className="text-xl font-semibold">
-        Take A Picture Of Your Workspace
-      </h2>
+      <h2 className="text-xl font-semibold">Take A Picture Of Your Workspace</h2>
 
       <div className="aspect-w-16 aspect-h-9 bg-gray-200 rounded-lg overflow-hidden">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          className={`w-full h-full object-cover`}
-        />
+        <video ref={videoRef} autoPlay playsInline className={`w-full h-full object-cover`} />
       </div>
 
       {uploading && <div>Uploading...</div>}
@@ -107,5 +96,5 @@ export function Camera({
         </div>
       )}
     </div>
-  );
+  )
 }
