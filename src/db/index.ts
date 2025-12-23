@@ -8,11 +8,14 @@ export type Background = {
   theme: string | null;
 };
 
-export async function addBackground(image: string): Promise<void> {
-  await sql`INSERT INTO backgrounds (image) VALUES (${image})`;
-  const result =
-    await sql`SELECT currval(pg_get_serial_sequence('backgrounds', 'id'))`;
-  return result.rows[0].currval;
+
+export async function addBackground(image: string): Promise<number> {
+  const result = await sql`
+    INSERT INTO backgrounds (image)
+    VALUES (${image})
+    RETURNING id
+  `;
+  return result.rows[0].id as number;
 }
 
 export async function setNewBackground(
