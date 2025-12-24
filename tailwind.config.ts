@@ -1,64 +1,173 @@
-import type { Config } from "tailwindcss";
+import svgToDataUri from 'mini-svg-data-uri'
+import type { Config } from 'tailwindcss'
+// @ts-expect-error TODO: Add type to flattenColorPalette
+import { default as flattenColorPalette } from 'tailwindcss/lib/util/flattenColorPalette'
 
 const config: Config = {
-    darkMode: ["class"],
-    content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-        "./src/**/*.{js,ts,jsx,tsx,mdx}"
-    ],
+  darkMode: ['class'],
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
   theme: {
-  	extend: {
-  		colors: {
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			card: {
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
-  			},
-  			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
-  			},
-  			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
-  				foreground: 'hsl(var(--secondary-foreground))'
-  			},
-  			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
-  			},
-  			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
-  			},
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			}
-  		},
-  		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
-  	}
+    extend: {
+      boxShadow: {
+        'custom-dark':
+          '0px 0px 0px 0px hsl(var(--primary)), 0px 1px 3px 0px hsl(var(--primary))',
+      },
+      fontFamily: {
+        sans: ['var(--font-sans)'],
+        mono: ['var(--font-mono)'],
+      },
+      colors: {
+        slot: {
+          DEFAULT: 'hsl(var(--slot))',
+          foreground: 'hsl(var(--slot-foreground))',
+        },
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        success: {
+          DEFAULT: 'hsl(var(--success))',
+          foreground: 'hsl(var(--success-foreground))',
+        },
+        warning: {
+          DEFAULT: 'hsl(var(--warning))',
+          foreground: 'hsl(var(--warning-foreground))',
+        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        chart: {
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
+        },
+      },
+
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+
+      backgroundImage: {
+        'auth-mesh': `radial-gradient(at 40% 20%, hsl(var(--primary) / 0.4) 0px, transparent 40%),
+        radial-gradient(at 80% 0%, hsl(var(--background)) 0px, transparent 50%),
+        radial-gradient(at 0% 50%, hsl(var(--background)) 0px, transparent 50%),
+        radial-gradient(at 80% 50%, hsl(var(--primary) / 0.2) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, hsl(var(--primary) / 0.3) 0px, transparent 50%),
+        radial-gradient(at 80% 100%, hsl(var(--background)) 0px, transparent 50%),
+        radial-gradient(at 0% 0%, hsl(var(--primary) / 0.1) 0px, transparent 50%)`,
+      },
+
+      keyframes: {
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
+        },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-in-out',
+        'accordion-up': 'accordion-up 0.2s ease-in-out',
+      },
+    },
   },
-  plugins: [require("tailwindcss-animate")],
-};
-export default config;
+  plugins: [
+    require('tailwind-scrollbar-hide'),
+    require('tailwindcss-animate'),
+    require('tailwindcss-animated'),
+
+    /* Anonymous Function Invoked
+    A plugin that adds each tailwind color as a global css variable, example:
+    var(--gray-200). This function is used to extend the base styles with CSS
+    custom properties for each color defined in the theme's color palette. */
+    addVariablesForColors,
+    ({ matchUtilities, theme }: any) => {
+      /* > matchUtilities Usage:
+      - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+      This method is called to dynamically generate custom utilities. 3 custom
+      utilities are then defined: bg-grid, bg-grid-small, and bg-dot.
+
+      Each designed to set a background image with SVG data URIs.
+      https://www.npmjs.com/package/mini-svg-data-uri
+
+      The SVGs are dynamically colored based on the utility's value, which is
+      expected to be a color from the theme's color palette.
+
+      `svgToDataUri` is used to convert SVG markup into a data URI, which is then
+      set as the value for backgroundImage. A technique allows for the creation
+      of intricate background patterns directly within your CSS. */
+      matchUtilities(
+        {
+          'bg-grid': (value: any) => ({
+            backgroundImage: `url("${svgToDataUri(
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`,
+            )}")`,
+          }),
+          'bg-grid-small': (value: any) => ({
+            backgroundImage: `url("${svgToDataUri(
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="8" height="8" fill="none" stroke="${value}"><path d="M0 .5H31.5V32"/></svg>`,
+            )}")`,
+          }),
+          'bg-dot': (value: any) => ({
+            backgroundImage: `url("${svgToDataUri(
+              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" height="16" fill="none"><circle fill="${value}" id="pattern-circle" cx="10" cy="10" r="1.6257413380501518"></circle></svg>`,
+            )}")`,
+          }),
+        },
+        {
+          values: flattenColorPalette(theme('backgroundColor')),
+          type: 'color',
+        },
+      )
+    },
+  ],
+}
+
+// This makes all your theme colors available as CSS variables throughout your
+// project, facilitating dynamic theming and easier color management. */
+//
+function addVariablesForColors({ addBase, theme }: any) {
+  const allColors = flattenColorPalette(theme('colors'))
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
+  )
+  addBase({ ':root': newVars })
+}
+
+export default config
