@@ -1,10 +1,10 @@
-type Params = Promise<{ id: string }>;
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
-type ErrorSearchParams = Promise<{ error?: string }>;
+type Params = Promise<{ slug: string }>
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+type ErrorSearchParams = Promise<{ error?: string }>
 
-type AsyncErrorPage = { searchParams: ErrorSearchParams };
-type AsyncPage = { params: Params; searchParams: SearchParams };
-type LayoutPage = Readonly<{ children: React.ReactNode }>;
+type AsyncErrorPage = { searchParams: ErrorSearchParams }
+type AsyncPage = { params: Params; searchParams: SearchParams }
+type LayoutPage = Readonly<{ children: React.ReactNode }>
 
 export type {
   Params,
@@ -13,4 +13,4 @@ export type {
   AsyncPage,
   AsyncErrorPage,
   LayoutPage,
-};
+}

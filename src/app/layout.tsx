@@ -22,8 +22,8 @@ export default function RootLayout({
           <Header />
           <section className="container-wrapper flex-1 overflow-hidden px-4 py-2">
             {children}
+            <Background />
           </section>
-          <Background />
           <Footer />
         </ProviderTree>
       </body>

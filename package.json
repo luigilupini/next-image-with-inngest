@@ -6,7 +6,7 @@
     "dev": "concurrently \"npm run dev:next\" \"npm run dev:inngest\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint-format": "biome check --write",
     "dev:next": "next dev",
     "dev:inngest": "npx inngest-cli@latest dev --no-discovery -u http://localhost:3000/api/inngest"
   },
@@ -27,13 +27,13 @@
     "inngest": "^3.22.10",
     "lucide-react": "^0.439.0",
     "mini-svg-data-uri": "^1.4.4",
-    "next": "14.2.9",
+    "next": "^16.1.1",
     "next-themes": "^0.4.6",
-    "openai": "^4.59.0",
-    "react": "^18",
-    "react-dom": "^18",
+    "openai": "^6.15.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-markdown": "^9.0.1",
-    "tailwind-merge": "^2.5.2",
+    "tailwind-merge": "^3.4.0",
     "tailwind-scrollbar-hide": "^4.0.0",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-animated": "^2.0.0",
@@ -41,15 +41,15 @@
     "zod": "^4.2.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "@types/w3c-image-capture": "^1.0.10",
-    "concurrently": "^9.0.0",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.9",
+    "concurrently": "^9.2.1",
+    "eslint-config-next": "^16.1.1",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
   }
 }

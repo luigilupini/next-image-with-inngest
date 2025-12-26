@@ -2,7 +2,7 @@ import { siteConfig } from '@/lib/site'
 
 export const Footer = () => {
   return (
-    <footer className="border-grid z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 md:py-0">
+    <footer className="border-grid z-50 border-t bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 md:py-0">
       <div className="container-wrapper">
         <div className="container mx-auto flex flex-col items-center justify-between py-2 md:flex-row">
           <div className="text-balance text-center text-xs font-light leading-loose opacity-70 md:text-left">

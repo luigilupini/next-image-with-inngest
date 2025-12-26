@@ -1,6 +1,49 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+@plugin "tailwindcss-animated";
+@plugin "tailwind-scrollbar-hide";
+
+@theme {
+  --color-slot: hsl(var(--slot));
+  --color-slot-foreground: hsl(var(--slot-foreground));
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+
+  --color-warning: hsl(var(--warning));
+  --color-warning-foreground: hsl(var(--warning-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --radius: var(--radius);
+}
 
 @layer base {
   /* Default Theme */
@@ -37,6 +80,7 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
   }
+
   .dark {
     --slot: 183 23% 45%;
     --slot-foreground: 185 25% 10%;
@@ -100,6 +144,7 @@
     --ring: 11 97% 72%;
     --radius: 0.5rem;
   }
+
   [data-theme="github"].dark {
     --background: 215 15% 16%;
     --foreground: 211 18% 73%;
@@ -159,6 +204,7 @@
     --ring: 152 46% 41%;
     --radius: 0.5rem;
   }
+
   [data-theme="supabase"].dark {
     --background: 0 0% 11%;
     --foreground: 0 0% 82%;
@@ -218,6 +264,7 @@
     --ring: 211 100% 50%;
     --radius: 0.5rem;
   }
+
   [data-theme="vercel"].dark {
     --background: 0 0% 0%;
     --foreground: 0 0% 93%;
@@ -312,15 +359,21 @@
   }
 
   .border-grid {
-    @apply border-dashed border-border/50 dark:border-border;
+    @apply border-dashed border-border/50;
+  }
+  .dark .border-grid {
+    @apply border-border;
   }
 
   .container-wrapper {
-    @apply mx-auto w-full max-w-[1600px] border-dashed border-border/70 dark:border-border min-[1600px]:border-x min-[1800px]:max-w-screen-2xl;
+    @apply mx-auto w-full max-w-[1600px] border-dashed border-border/70 min-[1600px]:border-x min-[1800px]:max-w-(--breakpoint-2xl);
+  }
+  .dark .container-wrapper {
+    @apply border-border;
   }
 
   .container {
-    @apply mx-auto max-w-screen-2xl px-4 xl:px-6;
+    @apply mx-auto max-w-(--breakpoint-2xl) px-4 xl:px-6;
   }
 }
 
@@ -330,6 +383,7 @@
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--border));
   border-radius: 5px;
