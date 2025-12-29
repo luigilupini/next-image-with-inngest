@@ -22,7 +22,9 @@ export function DeviceSelector({ devices, value, onChange }: Props) {
       </SelectTrigger>
       <SelectContent>
         {devices.length === 0 ? (
-          <span className="px-2 py-1 text-xs text-muted-foreground">No camera found</span>
+          <span className="px-2 py-1 text-xs text-muted-foreground">
+            No camera found
+          </span>
         ) : (
           devices.map((d) => (
             <SelectItem key={d.deviceId} value={d.deviceId}>

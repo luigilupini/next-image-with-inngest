@@ -21,7 +21,11 @@ export const MediaFilter = () => {
       </CardHeader>
       <CardContent className="px-4 pb-3 pt-0">
         <div className="flex items-center space-x-2">
-          <Switch id="has-images" checked={hasImages} onCheckedChange={handleImagesChange} />
+          <Switch
+            id="has-images"
+            checked={hasImages}
+            onCheckedChange={handleImagesChange}
+          />
           <Label htmlFor="has-images" className="text-xs font-normal">
             Show only launches with images
           </Label>

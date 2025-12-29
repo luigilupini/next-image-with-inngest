@@ -1,12 +1,12 @@
 /**
  * Type for query parameter values that can be set
  */
-export type QueryValue = string | number | null | undefined;
+export type QueryValue = string | number | null | undefined
 
 /**
  * Type for query parameter updates
  */
-export type QueryUpdates = Record<string, QueryValue>;
+export type QueryUpdates = Record<string, QueryValue>
 
 /**
  * Return type for the useQueryParams hook
@@ -37,7 +37,7 @@ export interface UseQueryParamsReturn {
    * })
    * ```
    */
-  set: (updates: QueryUpdates) => void;
+  set: (updates: QueryUpdates) => void
 
   /**
    * Get the value of a specific query parameter
@@ -60,7 +60,7 @@ export interface UseQueryParamsReturn {
    * const itemsPerPage = query.get('limit') || '10'
    * ```
    */
-  get: (key: string) => string | null;
+  get: (key: string) => string | null
 
   /**
    * Get all query parameters as a plain object
@@ -83,7 +83,7 @@ export interface UseQueryParamsReturn {
    * <DataTable {...query.getAll()} />
    * ```
    */
-  getAll: () => Record<string, string>;
+  getAll: () => Record<string, string>
 
   /**
    * Remove one or more query parameters
@@ -110,7 +110,7 @@ export interface UseQueryParamsReturn {
    * })
    * ```
    */
-  remove: (keys: string | string[]) => void;
+  remove: (keys: string | string[]) => void
 
   /**
    * Clear all query parameters
@@ -134,7 +134,7 @@ export interface UseQueryParamsReturn {
    * }
    * ```
    */
-  clear: () => void;
+  clear: () => void
 
   /**
    * Toggle a query parameter value on/off. If the current value matches,
@@ -169,7 +169,7 @@ export interface UseQueryParamsReturn {
    * ))
    * ```
    */
-  toggle: (key: string, value: string) => void;
+  toggle: (key: string, value: string) => void
 
   /**
    * Create a URL string with updated query parameters without navigation.
@@ -205,5 +205,5 @@ export interface UseQueryParamsReturn {
    * </a>
    * ```
    */
-  createUrl: (updates: QueryUpdates) => string;
+  createUrl: (updates: QueryUpdates) => string
 }

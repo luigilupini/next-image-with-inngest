@@ -1,18 +1,18 @@
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { Badge } from '@/components/ui/badge'
+import { Card } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
 type Props = {
-  name?: string;
-  classname?: string | undefined;
-  data: unknown;
-};
+  name?: string
+  classname?: string | undefined
+  data: unknown
+}
 
 const ShowCode = ({ data, name, classname }: Props) => {
   return (
     <Card
       className={cn(
-        "center relative my-2 w-fit bg-inherit p-1 text-inherit backdrop-blur-md",
+        'center relative my-2 w-fit bg-inherit p-1 text-inherit backdrop-blur-md',
         classname,
       )}
     >
@@ -25,7 +25,7 @@ const ShowCode = ({ data, name, classname }: Props) => {
         {JSON.stringify(data, null, 2)}
       </pre>
     </Card>
-  );
-};
+  )
+}
 
-export { ShowCode };
+export { ShowCode }

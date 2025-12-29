@@ -14,7 +14,10 @@ export const SearchLaunch = ({ className }: { className?: string }) => {
   }, 400)
   return (
     <div
-      className={cn('relative flex w-full items-center justify-center gap-2 sm:w-60', className)}
+      className={cn(
+        'relative flex w-full items-center justify-center gap-2 sm:w-60',
+        className,
+      )}
     >
       <Input
         type="search"
