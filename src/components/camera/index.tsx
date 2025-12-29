@@ -11,7 +11,7 @@ export const Camera = () => {
   const camera = useCamera({ onUpload: onUploadImage, width: 960 })
 
   return (
-    <div className="size-[500px] flex flex-col gap-2">
+    <div className="size-125 flex flex-col gap-2">
       <div className="relative flex-1">
         <div className="border rounded overflow-hidden size-full aspect-square backdrop-blur-lg">
           <video

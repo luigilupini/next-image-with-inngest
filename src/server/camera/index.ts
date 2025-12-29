@@ -3,7 +3,7 @@
 import { put } from '@vercel/blob'
 import { redirect } from 'next/navigation'
 import { addBackground } from '@/db'
-import { inngest } from '@/inngest/client'
+import { inngest } from '@/server/inngest/client'
 
 export const onUploadImage = async (formData: FormData) => {
   const file = formData.get('image') as Blob

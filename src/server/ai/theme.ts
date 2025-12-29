@@ -1,18 +1,18 @@
-import { openai } from "@/ai";
+import { openai } from '@/server/ai/client'
 
 export async function getTheme(url: string): Promise<string> {
   const out = await openai.chat.completions.create({
-    model: "gpt-4-turbo",
+    model: 'gpt-4-turbo',
     messages: [
       {
-        role: "user",
+        role: 'user',
         content: [
           {
-            type: "text",
+            type: 'text',
             text: `What is the overall theme of the background in this webcam image? Provide the theme as a string that can be used to promp the AI to generate a prompt for a new replacement background image`,
           },
           {
-            type: "image_url",
+            type: 'image_url',
             image_url: {
               url,
             },
@@ -21,7 +21,7 @@ export async function getTheme(url: string): Promise<string> {
       },
     ],
     max_tokens: 400,
-  });
+  })
 
-  return out?.choices[0].message.content ?? "";
+  return out?.choices[0].message.content ?? ''
 }

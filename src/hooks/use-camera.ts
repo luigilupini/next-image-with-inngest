@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 
 type UseCameraOptions = {
-  onUpload: (fd: FormData) => Promise<void>
+  onUpload: (formData: FormData) => Promise<void>
   width?: number
 }
 
@@ -72,9 +72,9 @@ export function useCamera({ onUpload, width = 960 }: UseCameraOptions) {
     try {
       video.pause()
       const blob = await cap.takePhoto()
-      const fd = new FormData()
-      fd.append('image', blob, 'image.jpg')
-      await onUpload(fd)
+      const formData = new FormData()
+      formData.append('image', blob, 'image.jpg')
+      await onUpload(formData)
       await video.play().catch(() => {})
     } catch (error) {
       console.error(error)
