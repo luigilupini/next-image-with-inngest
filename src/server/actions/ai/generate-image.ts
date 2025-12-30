@@ -1,7 +1,7 @@
-import { openai } from '@/server/ai/client'
+import { openaiClient } from '@/server/open-ai'
 
 export async function generateImage(theme: string): Promise<string> {
-  const response = await openai.images.generate({
+  const response = await openaiClient.images.generate({
     model: 'dall-e-3',
     prompt: `A webcam background image with this theme: ${theme}`,
     size: '1792x1024',

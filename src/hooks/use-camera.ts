@@ -3,11 +3,10 @@
 import { useRef, useState } from 'react'
 
 type UseCameraOptions = {
-  onUpload: (formData: FormData) => Promise<void>
   width?: number
 }
 
-export function useCamera({ onUpload, width = 960 }: UseCameraOptions) {
+export function useCamera({ width = 960 }: UseCameraOptions) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const streamRef = useRef<MediaStream | null>(null)
   const captureRef = useRef<ImageCapture | null>(null)
@@ -16,8 +15,10 @@ export function useCamera({ onUpload, width = 960 }: UseCameraOptions) {
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([])
 
   const [capturing, setCapturing] = useState(false)
-  const [uploading, setUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const [photoFile, setPhotoFile] = useState<File | null>(null)
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null)
 
   const stop = () => {
     streamRef.current?.getTracks().map((track) => track.stop())
@@ -25,7 +26,6 @@ export function useCamera({ onUpload, width = 960 }: UseCameraOptions) {
     captureRef.current = null
     if (videoRef.current) videoRef.current.srcObject = null
     setCapturing(false)
-    setUploading(false)
   }
 
   const enableCameras = async () => {
@@ -36,8 +36,8 @@ export function useCamera({ onUpload, width = 960 }: UseCameraOptions) {
       const cams = all.filter((d) => d.kind === 'videoinput')
       setDevices(cams)
       setDevice((prev) => prev || cams[0]?.deviceId || '')
-    } catch (error) {
-      console.error(error)
+    } catch (e) {
+      console.error(e)
       setError('Could not access cameras. Check browser permissions.')
     }
   }
@@ -55,61 +55,61 @@ export function useCamera({ onUpload, width = 960 }: UseCameraOptions) {
       captureRef.current = new ImageCapture(stream.getVideoTracks()[0])
       videoRef.current.srcObject = stream
       setCapturing(true)
-    } catch (error) {
-      console.error(error)
+    } catch (e) {
+      console.error(e)
       setError('Failed to start camera.')
     }
   }
 
+  const clearPhoto = () => {
+    if (photoUrl) URL.revokeObjectURL(photoUrl)
+    setPhotoUrl(null)
+    setPhotoFile(null)
+  }
+
   const takePhoto = async () => {
-    const video = videoRef.current
     const cap = captureRef.current
-    if (!video || !cap) return
+    if (!cap) return
 
     setError(null)
-    setUploading(true)
 
     try {
-      video.pause()
       const blob = await cap.takePhoto()
-      const formData = new FormData()
-      formData.append('image', blob, 'image.jpg')
-      await onUpload(formData)
-      await video.play().catch(() => {})
-    } catch (error) {
-      console.error(error)
-      setError('Failed to take/upload photo.')
-    } finally {
-      setUploading(false)
+      const file = new File([blob], 'image.jpg', { type: blob.type || 'image/jpeg' })
+
+      clearPhoto()
+      setPhotoFile(file)
+      setPhotoUrl(URL.createObjectURL(file))
+    } catch (e) {
+      console.error(e)
+      setError('Failed to take photo.')
     }
   }
 
   const hasDevices = devices.length > 0
-  const canStart = !!device && !capturing && !uploading
-  const canStop = capturing || uploading
-  const canTake = capturing && !uploading
+  const canStart = !!device && !capturing
+  const canStop = capturing
+  const canTake = capturing
 
   return {
-    // refs
     videoRef,
 
-    // state
     devices,
     device,
     capturing,
-    uploading,
     error,
 
-    // setters
+    photoFile,
+    photoUrl,
+
     setDevice,
 
-    // actions
     enableCameras,
     start,
     stop,
     takePhoto,
+    clearPhoto,
 
-    // derived
     hasDevices,
     canStart,
     canStop,

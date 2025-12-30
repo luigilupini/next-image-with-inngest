@@ -25,7 +25,6 @@ export async function setNewBackground(
 }
 
 export async function setReview(id: number, review: string): Promise<void> {
-  console.log('setting review', id, review)
   await sql`UPDATE backgrounds SET review=${review} WHERE id=${id}`
 }
 
@@ -41,7 +40,6 @@ export async function setTheme(id: number, theme: string): Promise<void> {
 }
 
 export async function getBackground(id: number): Promise<Background | null> {
-  console.log('getting background', id)
   const result = await sql`SELECT * FROM backgrounds WHERE id=${id}`
   return result.rows[0] as Background | null
 }

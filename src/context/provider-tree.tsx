@@ -1,11 +1,10 @@
 'use client'
 
-import type { PropsWithChildren } from 'react'
-
-import ThemeProvider from '@/context/leaf/theme'
+import { Toaster } from '@/components/ui/sonner'
 import { ReactQueryProvider } from './leaf/query'
+import { ThemeProvider } from './leaf/theme'
 
-export function ProviderTree({ children }: PropsWithChildren) {
+export function ProviderTree({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
       attribute="class"
@@ -14,6 +13,7 @@ export function ProviderTree({ children }: PropsWithChildren) {
       disableTransitionOnChange
     >
       <ReactQueryProvider>{children}</ReactQueryProvider>
+      <Toaster position="bottom-right" />
     </ThemeProvider>
   )
 }
