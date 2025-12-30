@@ -8,7 +8,7 @@ type Props = {
   data: unknown
 }
 
-const ShowCode = ({ data, name, classname }: Props) => {
+export const ShowCode = ({ data, name, classname }: Props) => {
   return (
     <Card
       className={cn(
@@ -17,7 +17,7 @@ const ShowCode = ({ data, name, classname }: Props) => {
       )}
     >
       {name && (
-        <Badge className="absolute -right-2 -top-[10px] h-5 text-nowrap rounded-md border font-mono text-[9px] backdrop-blur-xl">
+        <Badge className="absolute -right-2 -top-2.5 h-5 text-nowrap rounded-md border font-mono text-[9px] backdrop-blur-xl">
           {name}
         </Badge>
       )}
@@ -27,5 +27,3 @@ const ShowCode = ({ data, name, classname }: Props) => {
     </Card>
   )
 }
-
-export { ShowCode }

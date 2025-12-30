@@ -1,21 +1,19 @@
 'use client'
 
 import { FilterX } from 'lucide-react'
+import { useQueryStates } from 'nuqs'
 
 import { Button } from '@/components/ui/button'
 import { useFilterAmount } from '@/hooks/use-filter-amount'
-import { useQueryParams } from '@/hooks/use-query-params'
-
-const SEARCH_PARAM_KEYS = ['year', 'hasImages', 'status', 'search', 'bookmarks']
+import { searchParams } from '@/lib/params'
 
 export const ResetFilter = () => {
-  const query = useQueryParams()
+  const [, setFilters] = useQueryStates(searchParams)
   const amount = useFilterAmount()
-  const handleClearAll = () => query.remove(SEARCH_PARAM_KEYS)
   return (
     <Button
       variant="default"
-      onClick={handleClearAll}
+      onClick={() => setFilters(null)}
       disabled={amount === 0}
       className="gap-2"
     >

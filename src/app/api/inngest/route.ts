@@ -1,7 +1,5 @@
 import { serve } from 'inngest/next'
-
 import { inngestClient } from '@/server/inngest'
-
 import {
   newBackgroundImageInngest,
   uploadCameraImageInngest,

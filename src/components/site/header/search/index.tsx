@@ -1,17 +1,19 @@
 'use client'
 
 import { SearchIcon } from 'lucide-react'
-import { useDebounceCallback } from 'usehooks-ts'
-
+import { debounce, useQueryState } from 'nuqs'
 import { Input } from '@/components/ui/input'
-import { useQueryParams } from '@/hooks/use-query-params'
+import { searchParams } from '@/lib/params'
 import { cn } from '@/lib/utils'
 
 export const SearchLaunch = ({ className }: { className?: string }) => {
-  const query = useQueryParams()
-  const handleChange = useDebounceCallback((value: string) => {
-    query.set({ search: value })
-  }, 400)
+  const [search, setSearch] = useQueryState(
+    'search',
+    searchParams.search.withOptions({
+      limitUrlUpdates: debounce(1000),
+    }),
+  )
+
   return (
     <div
       className={cn(
@@ -22,8 +24,8 @@ export const SearchLaunch = ({ className }: { className?: string }) => {
       <Input
         type="search"
         placeholder="Search launches"
-        onChange={(e) => handleChange(e.target.value)}
-        defaultValue={query.get('search') || ''}
+        onChange={(e) => setSearch(e.target.value)}
+        defaultValue={search}
         className="peer pl-9 shadow-none placeholder:font-light focus-visible:border-primary/80 focus-visible:ring-1 focus-visible:ring-primary/80"
       />
       <SearchIcon className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-foreground/60 peer-focus:text-primary" />

@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import type { QueryUpdates, UseQueryParamsReturn } from '@/types/query.types'
 
 /**
- * Hook for managing URL query parameters with CRUD operations in Next.js 15
+ * Hook for managing URL query parameters with CRUD operations in Next.js
  *
  * @returns {UseQueryParamsReturn} Query parameter utilities
  *
@@ -30,10 +30,6 @@ export function useQueryParams(): UseQueryParamsReturn {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
-
-  if (!router) throw new Error('useQueryParams from client only')
-  if (!pathname) throw new Error('useQueryParams from client only')
-  if (!searchParams) throw new Error('useQueryParams from client only')
 
   /**
    * Helper to create a new URLSearchParams instance from current params

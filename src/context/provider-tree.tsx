@@ -1,5 +1,6 @@
 'use client'
 
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Toaster } from '@/components/ui/sonner'
 import { ReactQueryProvider } from './leaf/query'
 import { ThemeProvider } from './leaf/theme'
@@ -12,7 +13,9 @@ export function ProviderTree({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <ReactQueryProvider>{children}</ReactQueryProvider>
+      <ReactQueryProvider>
+        <NuqsAdapter>{children}</NuqsAdapter>
+      </ReactQueryProvider>
       <Toaster position="bottom-right" />
     </ThemeProvider>
   )

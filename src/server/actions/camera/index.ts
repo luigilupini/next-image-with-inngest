@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { zfd } from 'zod-form-data'
 import { addBackground } from '@/db'
 import { inngestClient } from '@/server/inngest'
+import { Events } from '@/server/inngest/constants'
 import { actionClient } from '@/server/safe-action'
 
 const uploadSchema = zfd.formData({
@@ -15,8 +16,6 @@ const uploadSchema = zfd.formData({
 export const uploadCameraImageAction = actionClient
   .inputSchema(uploadSchema)
   .action(async ({ parsedInput }) => {
-    console.log('Parsed result:', parsedInput)
-
     const buffer = await parsedInput.image.arrayBuffer()
     const data = Buffer.from(buffer)
 
@@ -29,7 +28,7 @@ export const uploadCameraImageAction = actionClient
     const backgroundId = await addBackground(url)
 
     await inngestClient.send({
-      name: 'upload-camera-image-event',
+      name: Events.UploadCameraImage,
       data: { backgroundId, url },
     })
 

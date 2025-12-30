@@ -6,7 +6,7 @@ import type { AsyncPage } from '@/types/general.types'
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
-export default async function Camera(props: AsyncPage) {
+export default async function ReviewPage(props: AsyncPage) {
   const { slug } = await props.params
 
   const background = await getBackground(+slug)

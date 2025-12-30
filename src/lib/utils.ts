@@ -37,12 +37,10 @@ export const normalizeErrors = (errors: { _errors: string[] } | undefined) => {
 
   // Flatten and collect all errors dynamically
   const allErrors: string[] = []
-
   // If there's a global error message
   if (errors._errors) {
     allErrors.push(...errors._errors)
   }
-
   // Loop through each key (e.g., experience, investmentRiskAppetite, etc.)
   Object.values(errors).forEach((value) => {
     if (
