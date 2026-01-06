@@ -1,12 +1,12 @@
 import BackgroundMonitor from '@/components/background-monitor'
 import { Badge } from '@/components/ui/badge'
 import { getBackground } from '@/db'
-import type { AsyncPage } from '@/types/general.types'
+import type { AsyncPageProps } from '@/types/general.types'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
 
-export default async function ReviewPage(props: AsyncPage) {
+export default async function ReviewPage(props: AsyncPageProps) {
   const { slug } = await props.params
 
   const background = await getBackground(+slug)
